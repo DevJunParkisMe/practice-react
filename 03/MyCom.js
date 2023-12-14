@@ -1,35 +1,36 @@
-import MyComN from "./MyComN";
+import MyComN from "./MyComN"; 
 const MyCom = () => {
-    let n = 10 ;
-    // let comTag;
+    let n = undefined ;
+    // let n = 10;
+    // let comTag ;
+
     // if (n === undefined) {
-    //     comTag = <div>값이 없습니다.</div>;
+    //     comTag = <div>값이 없습니다.</div> 
     // }
     // else {
-    //     comTag = <MyComN num={n} n1={n*2} />;
+    //     comTag = <MyComN n={n} n1={n*2} />
     // }
 
     return (
         <main className="container">
             <article>
-                <header>
-                    MyCom
-                </header>
-                { // 삼항연산자
-                /* {
-                    n === undefined 
-                    ? <div>값이 없습니다.</div> 
-                    : <MyComN num={n} n1={n*2}/>
-                } */}
-                { // 변수
-                /* {comTag} */}
+                <header>MyCom</header>
+                {
+                    // 삼항연산 처리
+                    // n === undefined 
+                    // ? <div>값이 없습니다.</div> 
+                    // : <MyComN n={n} n1={n*2} />
 
-                {// falsy 연산
-                    // n && <MyComN num={n} n1={n*2}/>
+                    //변수로 처리
+                    // comTag
+
+                    //falsy연산
+                    n && <MyComN n={n} n1={n*2} />
                 }
             </article>
-        </main>
+        </main>           
+        
     );
 }
 
-export default MyCom;
+export default MyCom ;

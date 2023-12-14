@@ -1,9 +1,23 @@
-.detail {
-    background-color: red;
-    color: white;
-}
 
-th {
-    background-color: blue;
-    color:white;
-}
+.numDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    background-color:lavender;
+    width: 100%;
+    height: 50px;
+  }
+
+  .numDiv > span {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center; 
+    margin: 5px;
+  }
+
+  .dt {
+    font-size: larger;
+    font-weight: bold;
+    color: blue;  
+  }
+  

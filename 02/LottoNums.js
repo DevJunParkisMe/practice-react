@@ -38,6 +38,7 @@ const LottoNums = ({nums}) => {
     });
 
     let n = Math.floor(nums.at(-1) / 10) + 1;
+    numsTag.push(<div></div>)
     return (
         <div className={style.lottoBox}>
             {numsTag}

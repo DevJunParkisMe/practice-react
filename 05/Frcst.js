@@ -1,50 +1,56 @@
 import Hh1 from "../comm/Hh1";
 import data from "./dataFrcst.json";
-import style from './Frcst.module.css';
+import style from "./Frcst.module.css";
 import { useState, useEffect } from "react";
+
 const Frcst = () => {
-    const dt = ["frcstOneDt", "frcstTwoDt", "frcstThreeDt", "frcstFourDt"];
-    const cn = ["frcstOneCn", "frcstTwoCn", "frcstThreeCn", "frcstFourCn"];
+    console.log(data)
+    const dtkey = ["frcstOneDt", "frcstTwoDt", "frcstThreeDt", "frcstFourDt"];
+    const cnkey = ["frcstOneCn", "frcstTwoCn", "frcstThreeCn", "frcstFourCn"];
+    //state 변수
+    const [cnTag, setCnTag] = useState([]);
+    //날짜(key):지역미세먼지(value) 인 dtcn 오브젝트 생성 
     let dtcn = {};
-    const [cnTag, setCnTag] = useState();
-    // 날짜가 클릭이 됐을 때,
-    const handleClick = (k) => {
-        let temp = dtcn[k].split(','); // split = 배열이 나옴
-        let city = [];
-        let value = [];
-        temp.map((item, idx) => {
-                item = item.trim().split(' : ');
-                city.push(item[0]);
-                value.push(item[1]);
-            }
-        );
-        let cvTag = city.map((item, idx) =>  
-            <div key={`cvTag`+idx}>
-                <span className={style.sp1}>{item}</span>
-                {value[idx] === '낮음' 
-                ? <span className={style.sp21}>{value[idx]}</span>
-                : value[idx] === '보통'
-                    ? <span className={style.sp22}>{value[idx]}</span>
-                    : <span className={style.sp23}>{value[idx]}</span> }
-            </div>
-        );
-        setCnTag(cvTag);      
-    }
-    
-    dt.map((item, idx) =>
-        dtcn[data[item]] = data[cn[idx]]
+    dtkey.map((item, idx) =>
+        dtcn[data[item]] = data[cnkey[idx]]
     );
-    let dtcnKey = Object.keys(dtcn);
-    let dtTag = dtcnKey.map((item, idx) =>
+    console.log("dtcn", dtcn)
+
+    //날짜 영역만들기
+    console.log("dtcn key", Object.keys(dtcn))
+    let dtTag = Object.keys(dtcn).map((item, idx) =>
         <div
-            key={"dtcn" + idx}
-            className={style.dtcnKey}
-            onClick={() => {handleClick(item)}}
+            key={`dtcn${idx}`}
+            className={style.dtcnkey}
+            onClick={() => handleClick(item)}
         >
             {item}
         </div>
     );
-    
+
+    //날짜가 클릭되었을때 실행 함수
+    const handleClick = (k) => {
+        let temp = dtcn[k].split(',');
+        temp = temp.map((item, idx) =>  {
+            let spitem = item.split(':') ;
+            return (
+                <div key={`cn` + idx}>
+                <span className={style.sp1}>{spitem[0]}</span>
+                {spitem[1].trim() === '낮음' 
+                ? <span className={style.sp21}>{spitem[1]}</span>
+                : spitem[1].trim() === '보통'
+                    ? <span className={style.sp22}>{spitem[1]}</span>
+                    : <span className={style.sp23}>{spitem[1]}</span>
+                }
+                </div>
+            )
+        });
+        setCnTag(temp);
+    };
+
+    useEffect(() => {
+        console.log("cnTag", cnTag)
+    }, [cnTag]);
 
     return (
         <main className="container">
@@ -58,6 +64,7 @@ const Frcst = () => {
                 </div>
             </article>
         </main>
-    );
-}
+    )
+};
+
 export default Frcst;

@@ -1,41 +1,38 @@
-.dtcnKey {
+.dtcnkey {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    background-color: aliceblue;
-    height:40px;
+    background-color: aliceblue; 
+    color: black;
+    height: 40px;
     border-radius: 10%;
     font-weight: bold;
 }
 
-.dtcnKey:hover {
+.dtcnkey:hover {
     background-color: blue;
     color: white;
+}
+
+.sp1 {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center; 
 }
 
 .sp21 {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-
-    background-color: red;
-    color: white;
+    background-color: aliceblue;
+    color: blue;
 }
 
 .sp22 {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-
-    background-color: gray;
-    color: white;
+    background-color: white;
+    color: black;
 }
 
 .sp23 {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-
-    background-color: blue;
-    color: white;
+    background-color:lavenderblush;
+    color: red;
 }
+
+

@@ -1,13 +1,13 @@
 import MyDiv11 from "./MyDiv11";
-
 // const MyDiv1 = (probs) => {
-const MyDiv1 = ({num}) => {
-    return (
+const MyDiv1 = ({n}) => {
+    return(
         <>
-            <div>MyDiv1, n = {num}</div>
-            <MyDiv11 num={num} />
+        <div>MyDiv1</div>
+        {/* <MyDiv11 n1 = {probs.n}/> */}
+        <MyDiv11 n1 = {n}/>
         </>
     );
 }
 
-export default MyDiv1;
+export default MyDiv1 ;

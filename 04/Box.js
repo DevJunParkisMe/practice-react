@@ -1,70 +1,58 @@
-import { useState, useEffect } from "react";
-import style from './Box.module.css';
-const Box = () => {
-    const [boxList, setBoxList] = useState();
-    const [listTag, setListTag] = useState();
-    const [detail, setDetail] = useState();
-    const showDetail = (item) => {
-        console.log(item)
-        setDetail("영화명: " + item.movieNm + ", 개봉일: " + item.openDt);
-    }
+import Hh1 from '../comm/Hh1' ;
+import style from './Box.module.css' ;
+import { useRef, useState, useEffect } from 'react';
 
-    // 컴포넌트 생성 시 한번만 실행 
+const Box = () => {
+    //날짜선택 
+    const dt = useRef() ;
+
+    //선택된 날짜
+    const [cdt, setCdt] = useState() ;
+
+    //컴포넌트 생성시 포커스 
     useEffect(() => {
-        let url = "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt=20230908"
-        fetch(url)
-            .then(resp => resp.json())
-            .then(data => {
-                setBoxList(data.boxOfficeResult.dailyBoxOfficeList);
-            })
-            .catch(err => console.log(err));
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1); 
+
+        let y = `${yesterday.getFullYear()}` ;
+        let m = yesterday.getMonth()+1 < 10 ? `0${yesterday.getMonth()+1}`
+                                            :`${yesterday.getMonth()+1}`;
+                                            
+        let d = yesterday.getDate() < 10 ? `0${yesterday.getDate()}`
+                                            :`${yesterday.getDate()}`;
+        console.log(y+m+d) ;
+
+        //어제 날짜로 기본 값 설정
+        dt.current.value = `${y}-${m}-${d}` ;
+        setCdt(y+m+d) ;
     }, []);
 
-    // state 변수가 변경될 때마다 실행
-    useEffect(() => {
-        console.log(boxList);
-        if (boxList) {
-            setListTag(boxList.map((item, idx) =>
-                <tr key={'mv'+idx}>
-                    <td>{item.rank}</td>
-                    <td onClick={() => showDetail(item)}>{item.movieNm}</td>
-                    <td>{parseInt(item.salesAmt).toLocaleString('ko-KR')}</td>
-                    <td>{
-                        item.rankInten == 0 
-                        ? "-" 
-                        : item.rankInten > 0 
-                            ? "▲ " + item.rankInten
-                            : "▼ " + Math.abs(item.rankInten)
-                        }</td>
-                </tr>
-            ));
-        }
-    }, [boxList])
+    useEffect(() =>{
+        console.log(cdt)
+    } , [cdt]);
+
+    //날짜가 변경되었을때 
+    const handleChange = () => {
+        let temp = dt.current.value.replaceAll('-','') ; 
+
+        setCdt(temp) ; 
+    }
 
     return (
-        <main className="container">
+        <main className="container"> 
+            <Hh1 title='박스오피스' /> 
             <article>
-                <header><h1>일일 박스 오피스</h1></header>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>순위</th>
-                            <th>영화명</th>
-                            <th>매출액</th>
-                            <th>증감</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {listTag}
-                    </tbody>
-                </table>
-
-                <footer>
-                    <div className={style.detail}>{detail}</div>
-                </footer>
+                <header>
+                    <div className={style.dt}>선택날짜 : {cdt}</div>
+                    <form>
+                        <input ref={dt} type='date' id='dt' name='dt' 
+                                onChange={handleChange}/>
+                    </form>
+                </header>
             </article>
         </main>
-    );
+    )
+
 }
 
 export default Box;
